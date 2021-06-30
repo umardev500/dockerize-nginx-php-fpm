@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  webserver:
+    build: ./docker/server/nginx
+    container_name: webserver
+    ports:
+      - 8080:8080
+    volumes:
+      - ./docker/server/php:/var/www/myapp
+      - ./docker/server/nginx/site.conf:/etc/nginx/conf.d/site.conf
+    depends_on:
+      - app
+
+  app:
+    build: ./docker/server/php
+    container_name: app
+    volumes:
+      - ./docker/server/php:/var/www/myapp
